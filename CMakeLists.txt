@@ -1,25 +1,31 @@
 cmake_minimum_required(VERSION 3.10)
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
 project(lab1)
 
-find_package(GTest REQUIRED)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror=maybe-uninitialized")
 
-add_executable(main
-    src/function.cpp
-    main.cpp
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  GIT_REPOSITORY https://github.com/google/googletest.git
+  GIT_TAG v1.15.0
 )
 
-add_executable(tests
+FetchContent_MakeAvailable(googletest)
+
+add_library(lab_lib 
     src/function.cpp
-    test/tests.cpp
 )
 
-target_link_libraries(tests PRIVATE gtest gtest_main)
+add_executable(main main.cpp)
+target_link_libraries(main lab_lib)
 
+enable_testing()
+add_executable(tests test/tests.cpp)
+target_link_libraries(tests lab_lib gtest gtest_main)
 
-target_include_directories(main PRIVATE include)
-target_include_directories(tests PRIVATE include)
+add_test(NAME UnitTests COMMAND tests)
+
+target_include_directories(lab_lib PUBLIC include)
