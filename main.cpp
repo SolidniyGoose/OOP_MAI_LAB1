@@ -1,15 +1,14 @@
 #include <iostream>
-#include "include/function.h"
+#include <function.hpp>
 
-int main(){
+int main() {
     std::string input;
-    std::string result{};
-
+    std::string result;
     std::getline(std::cin, input);
 
-    result = delete_vowels(input);
+    std::string result = text_processing::delete_vowels(input);
     
-    std::cout << "New string: " << result << std::endl;
+    std::cout << result << std::endl;
 
     return 0;
 }
