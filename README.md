@@ -18,13 +18,11 @@ CMakeLists.txt - конфигурация CMake
 ## Сборка
 ```
 mkdir build && cd build
-cmake -G "MinGW Makefiles" ..
+cmake ..
 make
 ```
 ## Запуск и тесты
 ```
-#Запуск основной программы
 ./main
-#Запуск тестов
 ./tests
 ```
